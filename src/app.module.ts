@@ -1,6 +1,7 @@
 import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { UserModule } from './user/user.module';
+import { AdminModule } from './admin/admin.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { Connection } from 'typeorm';
 import { MsgModule } from './msg/msg.module';
@@ -9,7 +10,8 @@ import { MsgModule } from './msg/msg.module';
   imports: [
     TypeOrmModule.forRoot(),
     UserModule,
-    MsgModule
+    MsgModule,
+    AdminModule
   ],
   controllers: [
     AppController
