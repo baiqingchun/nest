@@ -1,7 +1,7 @@
 import { Get, Post, Body, Put, Delete, Param, Controller, UsePipes } from '@nestjs/common';
 import { Request } from 'express';
 import { AdminService } from './admin.service';
-import { UserDto} from './dto';
+import {UserDto, UserPassDto} from './dto';
 import { HttpException } from '@nestjs/common/exceptions/http.exception';
 import { ValidationPipe } from '../shared/pipes/validation.pipe';
 
@@ -41,5 +41,9 @@ export class AdminController {
     const { username} = _user;
     const user = {token, username};
     return {user}
+  }
+  @Post('change/pass')
+  async changePass(@Body() changePassBody: UserPassDto){
+    return this.userService.changePass(changePassBody)
   }
 }

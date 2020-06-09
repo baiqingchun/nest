@@ -26,8 +26,8 @@ export class UserService {
     return await this.userRepository.find();
   }
 
-  async findOne({username, password}: LoginUserDto): Promise<UserEntity> {
-    const user = await this.userRepository.findOne({username});
+  async findOne({mobile, password}: LoginUserDto): Promise<UserEntity> {
+    const user = await this.userRepository.findOne({mobile});
     if (!user) {
       return null;
     }
@@ -42,10 +42,10 @@ export class UserService {
   async create(dto: CreateUserDto): Promise<UserData> {
 
     // check uniqueness of username/email
-    const {username, email, password} = dto;
+    const {username, mobile, password} = dto;
     const qb = await getRepository(UserEntity)
       .createQueryBuilder('user')
-      .where('user.username = :username', { username })
+      .where('user.mobile = :mobile', { mobile })
 
     const user = await qb.getOne();
 
@@ -59,18 +59,11 @@ export class UserService {
     // create new user
     let newUser = new UserEntity();
     newUser.username = username;
-    newUser.email = 'email';
+    newUser.mobile = mobile;
     newUser.password = password;
 
-    const errors = await validate(newUser);
-    if (errors.length > 0) {
-      const _errors = {username: 'Userinput is not valid.'};
-      this.MSG.fail('Input data validation failed',HttpStatus.BAD_REQUEST)
-
-    } else {
-      const savedUser = await this.userRepository.save(newUser);
-      return this.buildUserRO(savedUser);
-    }
+    const savedUser = await this.userRepository.save(newUser);
+    return this.buildUserRO(savedUser);
 
   }
 
@@ -97,10 +90,7 @@ export class UserService {
     return this.buildUserRO(user);
   }
 
-  async findByEmail(email: string): Promise<UserData>{
-    const user = await this.userRepository.findOne({email: email});
-    return this.buildUserRO(user);
-  }
+
   async findByUserAndPass(userp:LoginAdminUserDto){
     let user = await this.userRepository.findOne(userp)
     this.isUser(user)
@@ -128,10 +118,8 @@ export class UserService {
     const userRO = {
       id: user.id,
       username: user.username,
-      email: user.email,
-      bio: user.bio,
-      token: this.generateJWT(user),
-      image: user.image
+      mobile: user.mobile,
+      token: this.generateJWT(user)
     };
 
     return userRO;

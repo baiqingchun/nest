@@ -11,18 +11,29 @@ export class UserEntity {
   @Column()
   username: string;
 
-  @Column()
-  // @IsEmail()
+  @Column({default: ''})
   email: string;
 
-  @Column({default: ''})
-  bio: string;
-
-  @Column({default: ''})
-  image: string;
+  @Column()
+  mobile: string;
 
   @Column()
   password: string;
+
+  @Column({default: ''})
+  address: string;
+
+  @Column({default: 0})
+  state: number;
+
+  @Column({ type: 'timestamp', default: () => "CURRENT_TIMESTAMP"})
+  update_time: Date;
+
+  @Column({ type: 'timestamp', default: () => "CURRENT_TIMESTAMP"})
+  create_time: Date;
+
+  @Column({default: ''})
+  remark: string;
 
   @BeforeInsert()
   async hashPassword() {

@@ -1,4 +1,13 @@
-import {Entity, PrimaryGeneratedColumn, Column, BeforeInsert, JoinTable, ManyToMany, OneToMany} from 'typeorm';
+import {
+  Entity,
+  PrimaryGeneratedColumn,
+  Column,
+  BeforeInsert,
+  JoinTable,
+  ManyToMany,
+  OneToMany,
+  BeforeUpdate
+} from 'typeorm';
 import { IsEmail } from 'class-validator';
 import * as argon2 from 'argon2';
 
@@ -19,5 +28,6 @@ export class AdminEntity {
   async hashPassword() {
     this.password = await argon2.hash(this.password);
   }
+
 
 }

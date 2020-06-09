@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository, getRepository, DeleteResult } from 'typeorm';
 import { AdminEntity } from './admin.entity';
-import {UserDto} from './dto';
+import {UserDto, UserPassDto} from './dto';
 const jwt = require('jsonwebtoken');
 import { SECRET } from '../config';
 import { validate } from 'class-validator';
@@ -68,7 +68,14 @@ export class AdminService {
 
   }
 
-
+  async changePass(dto:UserPassDto){
+    let {username,password,newpassword} = dto
+    let user = await this.findOne({username,password})
+    if(!user) this.MSG.fail('no user')
+    let updated = Object.assign(user, {password:await argon2.hash(newpassword)});
+    // let op =  Object.assign({username:'admin6',password:'3243242'},{password:'6666'})
+    return await this.userRepository.save(updated);
+  }
 
 
 
