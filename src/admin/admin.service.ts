@@ -16,16 +16,16 @@ import {MsgService} from "../msg/msg.service";
 export class AdminService {
   constructor(
     @InjectRepository(AdminEntity)
-    private readonly userRepository: Repository<AdminEntity>,
+    private readonly adminRepository: Repository<AdminEntity>,
     private readonly MSG: MsgService
   ) {}
 
   async findAll(): Promise<AdminEntity[]> {
-    return await this.userRepository.find();
+    return await this.adminRepository.find();
   }
 
   async findOne({username, password}: UserDto): Promise<AdminEntity> {
-    const user = await this.userRepository.findOne({username});
+    const user = await this.adminRepository.findOne({username});
     if (!user) {
       return null;
     }
@@ -62,7 +62,7 @@ export class AdminService {
       this.MSG.fail('Input data validation failed',HttpStatus.BAD_REQUEST)
 
     } else {
-      const savedUser = await this.userRepository.save(newUser);
+      const savedUser = await this.adminRepository.save(newUser);
       return this.buildUserRO(savedUser);
     }
 
@@ -74,13 +74,13 @@ export class AdminService {
     if(!user) this.MSG.fail('no user')
     let updated = Object.assign(user, {password:await argon2.hash(newpassword)});
     // let op =  Object.assign({username:'admin6',password:'3243242'},{password:'6666'})
-    return await this.userRepository.save(updated);
+    return await this.adminRepository.save(updated);
   }
 
 
 
   async findById(id: number){
-    const user = await this.userRepository.findOne(id);
+    const user = await this.adminRepository.findOne(id);
 
     if (!user) {
       const errors = {User: ' not found'};

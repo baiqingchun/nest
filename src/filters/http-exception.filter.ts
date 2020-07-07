@@ -6,6 +6,7 @@ import {
   HttpStatus,
   Logger,
 } from '@nestjs/common';
+import {QueryFailedError} from "typeorm";
 
 @Catch(HttpException)
 export class HttpExceptionFilter implements ExceptionFilter {

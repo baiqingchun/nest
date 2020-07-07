@@ -11,7 +11,7 @@ import {
 import { IsEmail } from 'class-validator';
 import * as argon2 from 'argon2';
 
-@Entity('yy_admin')
+@Entity('admin')
 export class AdminEntity {
 
   @PrimaryGeneratedColumn()

@@ -5,18 +5,19 @@ import { AdminModule } from './admin/admin.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { Connection } from 'typeorm';
 import { MsgModule } from './msg/msg.module';
+import { BannerModule } from './banner/banner.module';
 
 @Module({
   imports: [
     TypeOrmModule.forRoot(),
     UserModule,
     MsgModule,
-    AdminModule
+    AdminModule,
+    BannerModule
   ],
   controllers: [
     AppController
-  ],
-  providers: []
+  ]
 })
 export class ApplicationModule {
   constructor(private readonly connection: Connection) {}

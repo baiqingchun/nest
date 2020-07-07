@@ -20,11 +20,6 @@ export class UserEntity {
   @Column()
   password: string;
 
-  @Column({default: ''})
-  address: string;
-
-  @Column({default: 0})
-  state: number;
 
   @Column({ type: 'timestamp', default: () => "CURRENT_TIMESTAMP"})
   update_time: Date;
