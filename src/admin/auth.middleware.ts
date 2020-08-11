@@ -24,7 +24,7 @@ export class AuthMiddleware implements NestMiddleware {
         throw new HttpException('User not found.', HttpStatus.UNAUTHORIZED);
       }
 
-      req.user = user;
+      // req.user = user;
       next();
 
     } else {

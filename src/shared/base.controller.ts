@@ -3,7 +3,10 @@ import * as jwt from 'jsonwebtoken';
 
 export class BaseController {
 
-  constructor() {}
+  // eslint-disable-next-line @typescript-eslint/no-empty-function
+  constructor() {
+
+  }
 
   protected getUserIdFromToken(authorization) {
     if (!authorization) return null;
